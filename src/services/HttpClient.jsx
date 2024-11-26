@@ -58,6 +58,22 @@ export const addDriversLicense = async (lastName, name, birthdate, licenseType) 
   return response.data;
 };
 
+export const getDriversLicenses = async () => {
+  const token = localStorage.getItem("token");
+
+  try {
+    const response = await axios.get(`${BACKEND_URL}/api/v1/licenses/getDriversLicense`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data?.message || "An error occurred while fetching driver's licenses";
+  }
+};
+
 export const verifyDriverLicense = async ({ lastName, name, licenseType }) => {
   const response = await axios.post(
       `${BACKEND_URL}/api/v1/verify`,

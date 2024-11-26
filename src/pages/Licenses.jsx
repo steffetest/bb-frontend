@@ -1,61 +1,48 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import { getDriversLicenses } from "../services/HttpClient";
 
 export const Licenses = () => {
-  const [driversLicense, setDriversLicense] = useState(null);
+  const [driversLicenses, setDriversLicenses] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
-
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-  const fetchDriversLicense = async () => {
-    setLoading(true); // Show loading while fetching
+  const fetchDriversLicenses = async () => {
+    setLoading(true);
     setErrorMessage("");
-    
+
     try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      };
-
-      const response = await axios.get(`${BACKEND_URL}/api/v1/auth/getDriversLicense`, config);
-
-      if (response.data.success) {
-        setDriversLicense(response.data.data);
-      } else {
-        setDriversLicense(null);
-        setErrorMessage(response.data.message || "No driver's license has been added");
-      }
-
+      const data = await getDriversLicenses();
+      setDriversLicenses(data.data); // Assuming data.data contains the list of licenses
     } catch (error) {
-      setDriversLicense(null);
-      setErrorMessage(
-        error.response?.data?.message || "An error occurred while fetching the driver's license"
-      );
+      setDriversLicenses([]);
+      setErrorMessage(error);
     } finally {
-      setLoading(false); // Hide loading after fetch
+      setLoading(false);
     }
   };
 
   return (
-    <div className='container flex flex-column'>
-      <h1 className='pageheader'>Licences</h1>
-      <button onClick={fetchDriversLicense}>Drivers License</button>
+    <div className="container flex flex-column">
+      <h1 className="pageheader">Licenses</h1>
+      <button onClick={fetchDriversLicenses}>Drivers Licenses</button>
 
       {loading ? (
         <p>Loading...</p>
       ) : (
         <>
-          {driversLicense ? (
+          {driversLicenses.length > 0 ? (
             <div>
-              <h2>Driver's License Details</h2>
-              <p>Name: {driversLicense.name}</p>
-              <p>Last Name: {driversLicense.lastName}</p>
-              <p>Birthdate: {new Date(driversLicense.birthdate).toLocaleDateString()}</p>
-              <p>License Type: {driversLicense.licenseType}</p>
+              <h2>Driver's Licenses</h2>
+              {driversLicenses.map((license, index) => (
+                <div className="card" key={license._id}>
+                  <div className="card-header">{license.licenseType} License</div>
+                  <div className="card-body">
+                    <p>First Name: {license.name}</p>
+                    <p>Last Name: {license.lastName}</p>
+                    <p>Birthdate: {new Date(license.birthdate).toLocaleDateString()}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <p>{errorMessage}</p>
