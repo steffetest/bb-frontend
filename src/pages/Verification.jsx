@@ -3,8 +3,8 @@ import { verifyDriverLicense } from '../services/HttpClient';
 import { useNavigate } from 'react-router-dom';
 
 export const Verification = () => {
-  const [lastName, setLastName] = useState("Lahtinen");
-  const [name, setName] = useState("Stefan");
+  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [licenseType, setLicenseType] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const navigate = useNavigate();

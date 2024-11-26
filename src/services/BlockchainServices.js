@@ -2,6 +2,8 @@ import { ethers } from 'ethers';
 import abi from '../../contract-abi.json';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 const CONTRACT_ADDRESS = "0xc761F8E6Cb9af69C49ef3EaA1140b07AAd8056e9";
 
 export const connectToMetaMask = async () => {
@@ -42,7 +44,7 @@ export const recordVerification = async ({requestId, userAddress, licenseType, i
     const transactionHash = tx.hash;
 
     // Send transactionHash to the backend to update the notification
-    await axios.post("http://localhost:5001/api/v1/notifications/updateNotification", {
+    await axios.post(`${BACKEND_URL}/api/v1/notifications/updateNotification`, {
       requestId,
       transactionHash,
     });

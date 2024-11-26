@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const login = async (email, password) => {
   try {
     const response = await axios.post(
-      "http://localhost:5001/api/v1/auth/login",
+      `${BACKEND_URL}/api/v1/auth/login`,
       { email, password },
     );
 
@@ -17,7 +19,7 @@ export const register = async (name, email, password) => {
   const registerData = {name, email, password};
 
   const response = await axios.post(
-    'http://localhost:5001/api/v1/auth/register',
+    `${BACKEND_URL}/api/v1/auth/register`,
     registerData
   );
 
@@ -28,7 +30,7 @@ export const getUserDetails = async () => {
   const token = localStorage.getItem("token");
 
   const response = await axios.get(
-    'http://localhost:5001/api/v1/auth/me',
+    `${BACKEND_URL}/api/v1/auth/me`,
     {
       headers: {
         Authorization: `Bearer ${token}`
@@ -44,7 +46,7 @@ export const addDriversLicense = async (lastName, name, birthdate, licenseType) 
   const token = localStorage.getItem("token");
 
   const response = await axios.post(
-    'http://localhost:5001/api/v1/licenses/addDriversLicense',
+    `${BACKEND_URL}/api/v1/licenses/addDriversLicense`,
     registerData,
     {
       headers: {
@@ -58,7 +60,7 @@ export const addDriversLicense = async (lastName, name, birthdate, licenseType) 
 
 export const verifyDriverLicense = async ({ lastName, name, licenseType }) => {
   const response = await axios.post(
-      'http://localhost:5001/api/v1/verify',
+      `${BACKEND_URL}/api/v1/verify`,
       { lastName, name, licenseType }
   );
   
@@ -69,7 +71,7 @@ export const approveLicenseVerification = async (requestId, { lastName, licenseT
   const token = localStorage.getItem("token");
   try {
     const response = await axios.post(
-      `http://localhost:5001/api/v1/verify/approve/${requestId}`,
+      `${BACKEND_URL}/api/v1/verify/approve/${requestId}`,
       { lastName, licenseType },  // Send data in the request body
       {
         headers: {
@@ -88,7 +90,7 @@ export const declineLicenseVerification = async (requestId) => {
   const token = localStorage.getItem("token");
   try {
     const response = await axios.post(
-      `http://localhost:5001/api/v1/verify/decline/${requestId}`,
+      `${BACKEND_URL}/api/v1/verify/decline/${requestId}`,
       {},
       {
         headers: {
@@ -108,7 +110,7 @@ export const getNotifications = async () => {
   const token = localStorage.getItem("token");
 
   const response = await axios.get(
-    'http://localhost:5001/api/v1/notifications',
+    `${BACKEND_URL}/api/v1/notifications`,
     {
       headers: {
         Authorization: `Bearer ${token}`
@@ -122,7 +124,7 @@ export const getNotifications = async () => {
 export const getNotificationStatus = async (requestId) => {
   try {
       const response = await axios.get(
-        `http://localhost:5001/api/v1/notifications/${requestId}`
+        `${BACKEND_URL}/api/v1/notifications/${requestId}`
       );
 
       return response.data;
@@ -136,7 +138,7 @@ export const getRequests = async () => {
   const token = localStorage.getItem("token");
 
   const response = await axios.get(
-    'http://localhost:5001/api/v1/requests',
+    `${BACKEND_URL}/api/v1/requests`,
     {
       headers: {
         Authorization: `Bearer ${token}`
@@ -152,7 +154,7 @@ export const getRequestInfo = async (requestId) => {
 
   try {
     const response = await axios.get(
-      `http://localhost:5001/api/v1/requests/${requestId}`,
+      `${BACKEND_URL}/api/v1/requests/${requestId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -171,7 +173,7 @@ export const markNotificationAsRead = async (notificationId) => {
   const token = localStorage.getItem("token");
 
   const response = await axios.put(
-    `http://localhost:5001/api/v1/notifications/${notificationId}/read`,
+    `${BACKEND_URL}/api/v1/notifications/${notificationId}/read`,
     {
       headers: {
         Authorization: `Bearer ${token}`

@@ -8,6 +8,8 @@ export const Licenses = () => {
 
   const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
   const fetchDriversLicense = async () => {
     setLoading(true); // Show loading while fetching
     setErrorMessage("");
@@ -19,7 +21,7 @@ export const Licenses = () => {
         }
       };
 
-      const response = await axios.get('http://localhost:5001/api/v1/auth/getDriversLicense', config);
+      const response = await axios.get(`${BACKEND_URL}/api/v1/auth/getDriversLicense`, config);
 
       if (response.data.success) {
         setDriversLicense(response.data.data);
