@@ -2,17 +2,7 @@ import { ethers } from 'ethers';
 import abi from '../../contract-abi.json';
 import axios from 'axios';
 
-// import { createAlchemyWeb3 } from "@alch/alchemy-web3"
-// const alchemyKey = process.env.REACT_APP_ALCHEMY_KEY;
-// const web3 = createAlchemyWeb3(alchemyKey)
-
 const CONTRACT_ADDRESS = "0xc761F8E6Cb9af69C49ef3EaA1140b07AAd8056e9";
-
-// const BBVerificationTestContract = new web3.eth.Contract(
-//   abi,
-//   CONTRACT_ADDRESS
-// );
-
 
 export const connectToMetaMask = async () => {
   if (!window.ethereum) {
