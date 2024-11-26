@@ -65,9 +65,10 @@ export const RequestsPage = () => {
                     <p>Transaction Hash: {request.transactionHash || "Pending"}</p>
                     <p>{request.message}</p>
                     <p>User: {request.user}</p>
-                    <Link to={`/requests/${request._id}`} className='button'>
-                    Log in as user to show data
-                    </Link>
+                    <br />
+                    <p>
+                        <Link to={`/requests/${request._id}`} className='button'>Log in as user to show full data</Link>
+                    </p>
                 </div>
             </div>
         ))}
