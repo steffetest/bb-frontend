@@ -83,3 +83,10 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #444;
   }
+
+  @media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+}

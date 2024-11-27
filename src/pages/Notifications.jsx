@@ -45,9 +45,13 @@ const Notifications = () => {
               <p>Created at: {new Date(notification.createdAt).toLocaleString()}</p>
               <p>{notification.message}</p>
               <p>Status: {notification.status}</p>
-              <Link to={`/approve/${notification._id}`} state={{ notification }}>
-                Approve/Decline Verification
-              </Link>
+              <br />
+              <p>
+                <Link to={`/approve/${notification._id}`} state={{ notification }}>
+                  Approve/Decline Verification
+                </Link>
+              </p>
+              
               {/* <button onClick={() => handleMarkAsRead(notification._id)}>Mark as Read</button> */}
             </div>
           </div>
