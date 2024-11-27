@@ -39,7 +39,7 @@ export const Licenses = () => {
                   <div className="card-body">
                     <p>First Name: {license.name}</p>
                     <p>Last Name: {license.lastName}</p>
-                    <p>Birthdate: {new Date(license.birthdate).toLocaleDateString()}</p>
+                    <p>Birthdate: {(license.birthdate).split('T')[0]}</p>
                   </div>
                 </div>
               ))}

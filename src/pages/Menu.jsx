@@ -6,10 +6,12 @@ import { toast } from 'react-toastify';
 const Menu = () => {
     const [userName, setUserName] = useState("");
     const [userId, setUserId] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
     useEffect(() => {
+      setIsLoading(true);
       const fetchUserData = async () => {
         try {
           const response = await getUserDetails();
@@ -17,6 +19,8 @@ const Menu = () => {
           setUserId(response.data._id)
         } catch (error) {
           console.error("Error fetching user data", error);
+        } finally {
+          setIsLoading(false);
         }
       }
 
@@ -29,6 +33,10 @@ const Menu = () => {
 
       <h1 className='pageheader'>Welcome {userName}!</h1>
       <h3 className='pageheader'>User ID: {userId}</h3>
+
+      {isLoading && (
+        <p>Loading User Information...</p>
+      )}
 
       <NavLink to="/addlicense">
         <button>Add Licenses</button>

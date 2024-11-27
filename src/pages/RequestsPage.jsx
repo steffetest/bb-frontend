@@ -6,9 +6,11 @@ export const RequestsPage = () => {
     const [requests, setRequests] = useState([]);
     const [filteredRequests, setFilteredRequests] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
-    const [errorMessage, setErrorMessage] = useState(""); 
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         const fetchRequests = async () => {
         try {
             const response = await getRequests();
@@ -22,6 +24,8 @@ export const RequestsPage = () => {
         } catch (error) {
             setErrorMessage(error.response?.data?.error || "You need to log in");
             console.error("Error fetching requests:", error);
+        } finally {
+            setIsLoading(false);
         }
         };
 
@@ -79,6 +83,10 @@ export const RequestsPage = () => {
             )}
         
         <p>{errorMessage}</p>
+
+        {isLoading && (
+            <p>Loading...</p>
+        )}
 
 
     </div>
