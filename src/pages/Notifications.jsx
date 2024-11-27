@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   const [filteredNotifications, setFilteredNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchNotifications = async () => {
       try {
         const response = await getNotifications();
@@ -19,6 +21,8 @@ const Notifications = () => {
         setFilteredNotifications(sortedNotifications);
       } catch (error) {
         console.error("Error fetching notifications:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -38,24 +42,28 @@ const Notifications = () => {
     <div className='container'>
       <h2>Your Notifications</h2>
 
-        {filteredNotifications.map((notification, index) => (
-          <div className='card' key={notification._id}>
-            <div className='card-header'>#{filteredNotifications.length - index} - Id: {notification._id}</div>
-            <div className='card-body'>
-              <p>Created at: {new Date(notification.createdAt).toLocaleString()}</p>
-              <p>{notification.message}</p>
-              <p>Status: {notification.status}</p>
-              <br />
-              <p>
-                <Link to={`/approve/${notification._id}`} state={{ notification }}>
-                  Approve/Decline Verification
-                </Link>
-              </p>
-              
-              {/* <button onClick={() => handleMarkAsRead(notification._id)}>Mark as Read</button> */}
-            </div>
+      {isLoading && (
+        <p>Loading Notifications...</p>
+      )}
+
+      {filteredNotifications.map((notification, index) => (
+        <div className='card' key={notification._id}>
+          <div className='card-header'>#{filteredNotifications.length - index} - Id: {notification._id}</div>
+          <div className='card-body'>
+            <p>Created at: {new Date(notification.createdAt).toLocaleString()}</p>
+            <p>{notification.message}</p>
+            <p>Status: {notification.status}</p>
+            <br />
+            <p>
+              <Link to={`/approve/${notification._id}`} state={{ notification }}>
+                Approve/Decline Verification
+              </Link>
+            </p>
+            
+            {/* <button onClick={() => handleMarkAsRead(notification._id)}>Mark as Read</button> */}
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };
