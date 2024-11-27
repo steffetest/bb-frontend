@@ -30,9 +30,9 @@ export const VerificationPage = () => {
 
             // Increment the counter and stop polling if it exceeds the limit
             pollCount += 1;
-            if (pollCount >= 60) {
+            if (pollCount >= 24) {
                 clearInterval(intervalId);
-                console.log("Polling stopped after 60 attempts. (5 minutes)");
+                console.log("Polling stopped after 24 attempts. (2 minutes)");
             }
         };
 
